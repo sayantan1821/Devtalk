@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
 const Profile = require('../../models/profile');
-const Users = require('../../models/Users');
+const User = require('../../models/User');
+const mongoose = require('mongoose');
 const {check, validationResult} = require('express-validator');
 
 router.get('/me', auth, async (req, res) => {
@@ -91,10 +92,9 @@ async (req, res) => {
 );
 
 // Get all profile
-
 router.get('/', async (req, res) => {
     try {
-        const profiles = await Profile.find.populate('user', ['name', 'avtar']);
+        const profiles = await Profile.find().populate('user', ['name', 'avatar'])
         res.json(profiles);
     } catch (err) {
         console.error(err);
