@@ -90,4 +90,16 @@ async (req, res) => {
 }
 );
 
+// Get all profile
+
+router.get('/', async (req, res) => {
+    try {
+        const profiles = await Profile.find.populate('user', ['name', 'avtar']);
+        res.json(profiles);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('server error');
+    }
+});
+
 module.exports = router;
