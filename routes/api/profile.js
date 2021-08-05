@@ -101,5 +101,44 @@ router.get('/', async (req, res) => {
         res.status(500).send('server error');
     }
 });
+//get profile by user id
+router.get('/user/:user_id', async (req, res) => {
+    try {
+        const profile = await Profile.findOne({
+            user: req.params.user_id
+        }).populate('user', ['name', 'avatar'])
+
+        if (!profile) {
+            return res.status(400).json({ msg: 'No profile found' })
+        }
+        res.json(profile);
+    } catch (err) {
+        console.error(err.message);
+        if(err.kind) {
+            return res.status(400).json({ msg: 'Profile not found '})
+        }
+        res.status(500).send('Server error')
+    }
+})
+
+// Delete profile, user & post
+router.delete('/', auth, async (req, res) => {
+    try {
+        //remove post
+
+        //remove profile
+        await Profile.findOneAndRemove({ user: req.user.id });
+        //remove user
+        await User.findOneAndRemove({ _id: req.user.id });
+
+        res.json({msg: 'User Deleted'});
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('server error');
+    }
+});
+
+//Add profile experience
+
 
 module.exports = router;
