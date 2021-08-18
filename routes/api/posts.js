@@ -103,5 +103,44 @@ router.delete('/:id', auth, async (req, res) => {
     }
 })
 
+//Like a Post
+
+router.put('/like/:id', auth, async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+
+        //check user if user alreay liked
+        if(post.likes.filter(like => like.user.toString() === req.user.id).length > 0) {
+            return res.status(400).json({ msg: 'Post already liked'})
+        }
+
+        post.likes.unshift({user: req.user.id});
+        await post.save();
+        res.json(post.likes)
+    } catch (err) {
+        console.error(err.message)
+        res.statud(500).send('Server Error 119')
+    }
+})
+
+//Unlike a post
+
+router.put('/unlike/:id', auth, async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+
+        //check user if user alreay liked
+        if(post.likes.filter(like => like.user.toString() === req.user.id).length === 0) {
+            return res.status(400).json({ msg: 'Post has not been liked yet'})
+        }
+
+        post.likes.unshift({user: req.user.id});
+        await post.save();
+        res.json(post.likes)
+    } catch (err) {
+        console.error(err.message)
+        res.statud(500).send('Server Error 119')
+    }
+})
 
 module.exports = router;
