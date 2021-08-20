@@ -144,8 +144,3 @@ router.put('/unlike/:id', auth, async (req, res) => {
 })
 
 module.exports = router;
-
-
-/// check 
-//check2
-//test4
