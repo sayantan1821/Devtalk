@@ -1,9 +1,11 @@
-import './App.css';
-
+import "./App.css";
+import Landing from "./components/layouts/Landing";
+import Navbar from "./components/layouts/Navbar";
 function App() {
   return (
     <div className="App">
-      ok
+      <Navbar />
+      <Landing />
     </div>
   );
 }
