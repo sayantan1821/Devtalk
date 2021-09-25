@@ -4,21 +4,16 @@ const path = require('path');
 
 const app = express();
 
-// Connect Database
 connectDB();
 
-// Init Middleware
 app.use(express.json());
 
-// Define Routes
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/profile', require('./routes/api/profile'));
 app.use('/api/posts', require('./routes/api/posts'));
 
-// Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
-  // Set static folder
   app.use(express.static('client/build'));
 
   app.get('*', (req, res) => {
