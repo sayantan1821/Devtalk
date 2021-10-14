@@ -1,4 +1,4 @@
-# DevConnector 2.0
+# DevTalk
 
 > Social network for developers
 
