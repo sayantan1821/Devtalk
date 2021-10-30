@@ -51,4 +51,3 @@ const PostSchema = new Schema({
 
 module.exports = mongoose.model('post', PostSchema);
 
-//update backend models
